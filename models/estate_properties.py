@@ -7,6 +7,7 @@ class EstateProperties(models.Model):
 
 
     # Basic Fields from Chapter 3
+    property_type_id= fields.Many2one("estate.property.type",string="Property Type")
     name = fields.Char(required=True)
     description = fields.Html()
     postcode = fields.Char()
