@@ -1,4 +1,6 @@
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare, float_is_zero
 class EstateProperties(models.Model):
     _name="estate.properties"
     _description="Real Estate Property"
@@ -25,6 +27,18 @@ class EstateProperties(models.Model):
     postcode = fields.Char()
     date_availability = fields.Date(copy=False, default=lambda self: fields.Date.today())
     expected_price = fields.Float(required=True)
+    @api.constrains("expected_price", "selling_price")
+    def _check_selling_price(self):
+        for record in self:
+            # 1. Skip the check if selling price is zero (it's zero until an offer is accepted) remeber abel
+            if float_is_zero(record.selling_price, precision_digits=2):
+                continue
+            limit_price = record.expected_price * 0.9
+            if float_compare(record.selling_price, limit_price, precision_digits=2) == -1:
+                raise ValidationError(
+                    "The selling price cannot be lower than 90% of the expected price! "
+                    "Check your offers and expected price."
+                )
     selling_price = fields.Float(readonly=True, copy=False)
     bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
