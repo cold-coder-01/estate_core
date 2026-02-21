@@ -9,6 +9,7 @@ class EstateProperties(models.Model):
 
 
     # Basic Fields from Chapter 3
+    _order= "id desc"
     property_type_id= fields.Many2one("estate.property.type",string="Property Type")
     user_id = fields.Many2one(
         "res.users",
