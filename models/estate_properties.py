@@ -32,6 +32,13 @@ class EstateProperties(models.Model):
     garage = fields.Boolean()
     garden = fields.Boolean()
     garden_area = fields.Integer()
+    total_area = fields.Integer(string="Total Area (sqm)", compute="_compute_total_area")
+    # The decorator tells Odoo to recalculate whenever living_area or garden_area changes
+    # because of the api it updates the data at real time
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
     garden_orientation = fields.Selection(
         selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         string="Orientation"
