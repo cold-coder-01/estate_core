@@ -12,7 +12,7 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="date_availability" string="Available From"/>
-                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="tag_ids" widget="many2many_tags" optional="hide"/>
             </list>
         </field>
     </record>
@@ -55,8 +55,8 @@
                             <field name="facades"/>
                             <field name="garage"/>
                             <field name="garden"/>
-                            <field name="garden_area" string="Garden Area (sqm)"/>
-                            <field name="garden_orientation"/>
+                            <field name="garden_area" string="Garden Area (sqm)" invisible="not garden"/>
+                            <field name="garden_orientation" invisible="not garden"/>
                             <field name="total_area"/>
                         </group>
                     </page>
