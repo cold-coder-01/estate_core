@@ -52,6 +52,14 @@ class EstateProperties(models.Model):
         selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         string="Orientation"
     )
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = "north"
+        else:
+            self.garden_area = 0
+            self.garden_orientation = False
     active = fields.Boolean(default=True)
     state = fields.Selection(
         selection=[
