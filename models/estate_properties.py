@@ -39,6 +39,15 @@ class EstateProperties(models.Model):
     def _compute_total_area(self):
         for record in self:
             record.total_area = record.living_area + record.garden_area
+
+    best_price= fields.Float(string="Best Offer", compute="_compute_best_price")
+    @api.depends("offer_ids.price")
+    def _compute_best_price(self):
+        for record in self:
+            # We use mapped to get a list of all prices from the related offers
+            prices = record.offer_ids.mapped("price")
+            # If there are prices, find the max; otherwise, set to 0.0
+            record.best_price = max(prices) if prices else 0.0
     garden_orientation = fields.Selection(
         selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
         string="Orientation"
