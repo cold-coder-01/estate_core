@@ -6,7 +6,9 @@
     'description': 'A module to manage real estate listings as per the Odoo 19.0 tutorial.',
     'author':'Abel Meles',
     'depends': ['base'],
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv'
+    ],
     'installable': True,
     'application': True,
     'license': 'LGPL-3',
