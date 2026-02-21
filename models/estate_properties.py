@@ -18,6 +18,8 @@ class EstateProperties(models.Model):
         copy=False
     )
     tag_ids= fields.Many2many("estate.property.tag", string="Tags")
+    # ... inside my EstateProperty class ...
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     name = fields.Char(required=True)
     description = fields.Html()
     postcode = fields.Char()
