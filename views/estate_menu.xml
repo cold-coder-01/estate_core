@@ -20,4 +20,18 @@
               name="Properties"
               parent="estate_first_level_menu" 
               action="estate_property_action"/>
+    <menuitem id="estate_menu_settings" 
+              name="Settings" 
+              parent="estate_menu_root" 
+              sequence="100"/>
+
+    <menuitem id="estate_property_type_menu_action" 
+              action="estate_property_type_action" 
+              parent="estate_menu_settings" 
+              sequence="10"/>
+
+    <menuitem id="estate_property_tag_menu_action" 
+              action="estate_property_tag_action" 
+              parent="estate_menu_settings" 
+              sequence="20"/>
 </odoo>

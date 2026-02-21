@@ -17,6 +17,7 @@ class EstateProperties(models.Model):
         string="Buyer",
         copy=False
     )
+    tag_ids= fields.Many2many("estate.property.tag", string="Tags")
     name = fields.Char(required=True)
     description = fields.Html()
     postcode = fields.Char()
