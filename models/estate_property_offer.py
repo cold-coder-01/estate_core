@@ -31,6 +31,11 @@ class EstatePropertyOffer(models.Model):
             record.status = "refused"
         return True
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
+    property_type_id = fields.Many2one(
+        related="property_id.property_type_id", 
+        string="Property Type", 
+        store=True
+    )
     # This field links back to your main property model
     property_id = fields.Many2one("estate.properties", string="Property", required=True)
     validity= fields.Integer(string="Validity (days)", default=7)
