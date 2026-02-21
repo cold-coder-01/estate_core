@@ -8,7 +8,7 @@ class EstateProperties(models.Model):
 
     # Basic Fields from Chapter 3
     name = fields.Char(required=True)
-    description = fields.Text()
+    description = fields.Html()
     postcode = fields.Char()
     date_availability = fields.Date(copy=False, default=lambda self: fields.Date.today())
     expected_price = fields.Float(required=True)
