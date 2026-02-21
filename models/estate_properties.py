@@ -32,5 +32,6 @@ class EstateProperties(models.Model):
             ('sold', 'Sold'),
             ('canceled', 'canceled'),
         ]
+        
     )
     
