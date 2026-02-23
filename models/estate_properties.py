@@ -109,10 +109,10 @@ class EstateProperties(models.Model):
     state = fields.Selection(
         selection=[
             ('new', 'New'),
-            ('offer-received', 'Offer Received'),
+            ('offer_received', 'Offer Received'),
             ('offer_accepted', 'Offer Accepted'),
             ('sold', 'Sold'),
-            ('canceled', 'canceled'),
+            ('cancel', 'cancel'),
         ]
         
     )
@@ -127,7 +127,7 @@ class EstateProperties(models.Model):
         for record in self:
             if record.state == "sold":
                 raise UserError("A sold property cannot be canceled.")
-            record.state = "canceled"
+            record.state = "cancel"
         return True
     _sql_constraints = [
         (
