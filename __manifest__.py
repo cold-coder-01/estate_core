@@ -5,7 +5,8 @@
     'summary':'manage property Advertisment',
     'description': 'A module to manage real estate listings as per the Odoo 19.0 tutorial.',
     'author':'Abel Meles',
-    'depends': ['base'],
+    'depends': ['base',
+                'account',],
     'data': [
         'security/ir.model.access.csv',
         'views/estate_property_views.xml',

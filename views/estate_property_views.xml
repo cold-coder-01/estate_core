@@ -25,10 +25,15 @@
         <field name="model">estate.properties</field>
         <field name="arch" type="xml">
             <form string="Property">
-               <header>
-                   <button name="action_sold" type="object" string="Sold" invisible="state in ('sold', 'canceled')"/>
-                   <button name="action_cancel" type="object" string="Cancel" invisible="state in ('sold', 'canceled')"/>
-                   <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
+                <header>
+                  <button name="action_create_invoice" 
+                         type="object" 
+                         string="Create Invoice" 
+                         class="oe_highlight" 
+                         invisible="state != 'sold'"/>
+                  <button name="action_sold" type="object" string="Sold" invisible="state != 'offer_accepted'"/>
+                  <button name="action_cancel" type="object" string="Cancel" invisible="state in ('sold', 'cancel')"/>
+                  <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                 </header>
                <sheet>
                  <div class="oe_title">

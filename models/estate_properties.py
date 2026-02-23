@@ -1,15 +1,45 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare, float_is_zero
 class EstateProperties(models.Model):
     _name="estate.properties"
+    _inherit=['mail.thread', 'mail.activity.mixin']
     _description="Real Estate Property"
+    _order= "id desc"
+
+    def action_create_invoice(self):
+        for record in self:  #validation don't allow invoicing with out a buyer or price
+            if not record.buyer_id:
+                raise UserError(_("you must have a buyer liniked with a property to create an invoice!"))
+            # move_type 'out_invoice' = Customer Invoice
+            invoice = self.env['account.move'].create({
+                'partner_id': record.buyer_id.id,
+                'move_type': 'out_invoice',
+                'journal_id': self.env['account.journal'].search([('type', '=', 'sale')], limit=1).id,
+                'invoice_line_ids': [
+                    (0, 0, {
+                        'name': f"Sale of Property: {record.name}",
+                        'quantity': 1,
+                        'price_unit': record.selling_price,
+                    }),
+                ],
+            })
+            # 3. Open the Invoice we just created
+            return {
+                'name': _('Property Invoice'),
+                'view_mode': 'form',
+                'res_model': 'account.move',
+                'res_id': invoice.id,
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+            }
+            
    
 
 
 
     # Basic Fields from Chapter 3
-    _order= "id desc"
+    
     property_type_id= fields.Many2one("estate.property.type",string="Property Type")
     user_id = fields.Many2one(
         "res.users",
