@@ -129,6 +129,13 @@ class EstateProperties(models.Model):
                 raise UserError("A sold property cannot be canceled.")
             record.state = "cancel"
         return True
+    def action_set_to_new(self):
+        for record in self:   # business logic don't allow sold property to become new, just i did it for practice!
+            if record.state =="sold":
+                raise UserError("you can not set property to new if it is already sold")
+            record.state = "new"
+            record.selling_price = 0
+        return True
     _sql_constraints = [
         (
             "check_expected_price",

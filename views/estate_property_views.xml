@@ -31,6 +31,10 @@
                          string="Create Invoice" 
                          class="oe_highlight" 
                          invisible="state != 'sold'"/>
+                  <button name="action_set_to_new"
+                          type="object"
+                          string="Reset To Draft"
+                          invisible="state not in ('offer_received', 'offer_accepted', 'cancel')"/>
                   <button name="action_sold" type="object" string="Sold" invisible="state != 'offer_accepted'"/>
                   <button name="action_cancel" type="object" string="Cancel" invisible="state in ('sold', 'cancel')"/>
                   <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
